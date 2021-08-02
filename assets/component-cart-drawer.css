@@ -1,0 +1,66 @@
+.pre-scrim {
+	opacity: 0;
+	z-index: 11;
+	visibility: hidden;
+	display: block !important;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	transition: opacity 0.25s, visibility 0s linear 0.25s;
+	background-color: hsla(0, 0%, 7%, 0.36);
+	-webkit-backdrop-filter: blur(4px);
+	backdrop-filter: blur(4px);
+}
+
+.cart-drawer__container {
+	position: fixed;
+	overflow-x: hidden;
+	top: 0;
+	bottom: 0;
+	background-color: #fff;
+	max-width: 550px;
+	width: 100%;
+	/* transition: transform 0.25s; */
+	transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+	display: block;
+	z-index: 20;
+	padding: 0 2rem;
+	right: -550px;
+}
+
+.cart-drawer__header {
+	margin-top: 0.6rem;
+	margin-bottom: 0.6rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #e8e8e1;
+}
+
+.cart-drawer__header button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+/* ==================== Show State ==================== */
+
+.pre-scrim.show-cart-drawer {
+	opacity: 1;
+	visibility: visible;
+	transition: opacity 0.8s ease, visibility 0s;
+	cursor: pointer;
+}
+
+.cart-drawer__container.show-cart-drawer {
+	transform: translateX(-550px);
+	display: block;
+	transition-duration: 0.45s;
+}
+
+body.show-cart-drawer {
+	overflow-y: hidden;
+}
+

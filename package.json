@@ -1,0 +1,14 @@
+{
+	"name": "dawn-demo-theme",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"mix": "npx mix watch"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"laravel-mix": "^6.0.27"
+	}
+}
