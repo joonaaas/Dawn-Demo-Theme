@@ -3,12 +3,14 @@
 	"version": "1.0.0",
 	"description": "",
 	"scripts": {
-		"mix": "npx mix watch"
+		"mix": "npx mix watch",
+		"production": "npx mix --production"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"axios": "^0.21.1",
 		"laravel-mix": "^6.0.27"
 	}
 }

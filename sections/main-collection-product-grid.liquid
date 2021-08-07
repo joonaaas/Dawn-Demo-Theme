@@ -6,6 +6,8 @@
 <link rel="preload" href="{{ 'component-badge.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="{{ 'component-rte.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
+<script src="{{ 'quick-add-cart.js' | asset_url }}" defer="defer"></script>
+
 <noscript>{{ 'component-card.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-price.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-badge.css' | asset_url | stylesheet_tag }}</noscript>
@@ -438,6 +440,7 @@
               %}
             </li>
           {%- endfor -%}
+
         </ul>
 
         {%- if paginate.pages > 1 -%}

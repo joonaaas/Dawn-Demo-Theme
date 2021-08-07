@@ -102,4 +102,48 @@
       </div>
     </div>
   </a>
+
+  {% assign product = product_card_product %}
+  {%- form 'product', product, id: quick_add_cart, class: 'form quick-add-cart', novalidate: 'novalidate', data-type: 'quick-add-to-cart' -%}
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    <div class="product-form__buttons">
+      <button
+        type="submit"
+        name="add"
+        class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout and product.selling_plan_groups == empty %}button--secondary{% else %}button--primary{% endif %}"
+      {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+      >
+          {%- if product.selected_or_first_available_variant.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+      </button>
+    </div>
+  {%- endform -%}
+
+
+  {% comment %} <form action="/cart/add" method="post" enctype="multipart/form-data" id="QuickAddToCartForm" class="quick-add-to-cart small--hide clearfix">
+    {% if product_card_product.variants.size > 1 %}
+      <select id="product-select-{{ product_card_product.id }}" name='id' class="text-center">
+      {% for variant in product_card_product.variants %}
+      {% if variant.available %}
+        <option {% if variant == product_card_product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }}</option>
+      {% else %}
+        <option disabled="disabled">
+        {{ variant.title }} - Sold out
+        </option>
+      {% endif %}
+      {% endfor %}
+      </select>
+      {% else %}
+        <input type="hidden" name="id" value="{{ product_card_product.variants.first.id }}" />
+      {% endif %}
+
+      {% if product_card_product.available %}
+        <button type="submit" name="add" id="AddToCart" class="btn btn-mini text-center">Add To Cart</button>
+      {% else %}
+        <h6>Out of Stock</h6>
+      {% endif %}
+  </form> {% endcomment %}
 </div>
