@@ -1,6 +1,4 @@
-<!-- <link rel="stylesheet" href="{{ 'component-cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'"> -->
 <link rel="stylesheet" href="{{ 'component-cart-drawer.css' | asset_url }}">
-
 
 <noscript>{{ 'component-badge.css' | asset_url | stylesheet_tag }}</noscript>
 
@@ -13,11 +11,28 @@
           clip-rule="evenodd" />
       </svg></button>
   </div>
+
   <div class="cart-drawer__body">
-    <p>Your cart is currently empty.</p>
+    <p data-cart-empty="true">Your cart is currently empty.</p>
+    <ul id="cart-list"></ul>
+
+    <!-- List template for cart items -->
+    <template id="list-item-template">
+        <li class="list-item">
+          <div class="list-item__image-container">
+            <img src="" alt="" data-list-item-image>
+          </div>
+          <div class="list-item__details">
+            <h3 class="list-item__title" data-list-item-title></h3>
+            <input type="number" name="quantity" id="quantity" data-list-item-quantity>
+            <div class="list-item__price" data-list-item-price></div>
+          </div>
+        </li>
+    </template>
+
   </div>
 </div>
 
 <div class="pre-scrim"></div>
 
-<script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+<script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>

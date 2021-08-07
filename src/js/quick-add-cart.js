@@ -1,4 +1,8 @@
 const forms = document.querySelectorAll('.quick-add-cart');
+const body = document.querySelector('body');
+const preScrim = document.querySelector('.pre-scrim');
+const cartDrawer = document.querySelector('.cart-drawer__container');
+
 const axios = require('axios').default;
 
 forms.forEach((form) => {
@@ -14,5 +18,13 @@ forms.forEach((form) => {
 				},
 			],
 		});
+
+		openCartDrawer();
 	});
 });
+
+function openCartDrawer() {
+	body.classList.add('show-cart-drawer');
+	preScrim.classList.add('show-cart-drawer');
+	cartDrawer.classList.add('show-cart-drawer');
+}

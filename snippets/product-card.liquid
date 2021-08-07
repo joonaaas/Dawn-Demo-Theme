@@ -122,28 +122,4 @@
     </div>
   {%- endform -%}
 
-
-  {% comment %} <form action="/cart/add" method="post" enctype="multipart/form-data" id="QuickAddToCartForm" class="quick-add-to-cart small--hide clearfix">
-    {% if product_card_product.variants.size > 1 %}
-      <select id="product-select-{{ product_card_product.id }}" name='id' class="text-center">
-      {% for variant in product_card_product.variants %}
-      {% if variant.available %}
-        <option {% if variant == product_card_product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }}</option>
-      {% else %}
-        <option disabled="disabled">
-        {{ variant.title }} - Sold out
-        </option>
-      {% endif %}
-      {% endfor %}
-      </select>
-      {% else %}
-        <input type="hidden" name="id" value="{{ product_card_product.variants.first.id }}" />
-      {% endif %}
-
-      {% if product_card_product.available %}
-        <button type="submit" name="add" id="AddToCart" class="btn btn-mini text-center">Add To Cart</button>
-      {% else %}
-        <h6>Out of Stock</h6>
-      {% endif %}
-  </form> {% endcomment %}
 </div>

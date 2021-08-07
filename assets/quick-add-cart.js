@@ -2062,6 +2062,9 @@ var __webpack_exports__ = {};
   !*** ./src/js/quick-add-cart.js ***!
   \**********************************/
 var forms = document.querySelectorAll('.quick-add-cart');
+var body = document.querySelector('body');
+var preScrim = document.querySelector('.pre-scrim');
+var cartDrawer = document.querySelector('.cart-drawer__container');
 
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").default;
 
@@ -2076,8 +2079,15 @@ forms.forEach(function (form) {
         quantity: 1
       }]
     });
+    openCartDrawer();
   });
 });
+
+function openCartDrawer() {
+  body.classList.add('show-cart-drawer');
+  preScrim.classList.add('show-cart-drawer');
+  cartDrawer.classList.add('show-cart-drawer');
+}
 })();
 
 /******/ })()
