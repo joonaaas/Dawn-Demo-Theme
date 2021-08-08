@@ -2058,15 +2058,16 @@ process.umask = function() { return 0; };
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!**********************************!*\
-  !*** ./src/js/quick-add-cart.js ***!
-  \**********************************/
+/*!*******************************!*\
+  !*** ./src/js/custom-cart.js ***!
+  \*******************************/
 var forms = document.querySelectorAll('.quick-add-cart');
 var body = document.querySelector('body');
 var preScrim = document.querySelector('.pre-scrim');
 var cartDrawer = document.querySelector('.cart-drawer__container');
 
-var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").default;
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").default; // * Quick add to cart on the collection --------------------------
+
 
 forms.forEach(function (form) {
   form.addEventListener('submit', function (e) {
@@ -2078,15 +2079,68 @@ forms.forEach(function (form) {
         id: formProps.id,
         quantity: 1
       }]
+    }).then(function (response) {
+      console.log(response);
+      getCartItems();
+      showCartDrawer();
+    })["catch"](function (error) {
+      console.log(error);
     });
-    openCartDrawer();
   });
 });
 
-function openCartDrawer() {
+function showCartDrawer() {
   body.classList.add('show-cart-drawer');
   preScrim.classList.add('show-cart-drawer');
   cartDrawer.classList.add('show-cart-drawer');
+} // * Rendering Cart Item to the cart drawer --------------------------
+
+
+var list = document.querySelector('#cart-list');
+var template = document.querySelector('#list-item-template');
+var emptyText = document.querySelector('[data-cart-empty]'); // - img
+// - title
+// - product link
+// - price
+// - sub price
+
+document.addEventListener('DOMContentLoaded', function () {
+  getCartItems();
+});
+
+function getCartItems() {
+  axios.get('/cart.js').then(function (response) {
+    var data = response.data;
+    var items = [];
+    items = data.items;
+    console.log(items);
+    items.length ? emptyText.dataset.cartEmpty = 'false' : emptyText.dataset.cartEmpty = 'true';
+    var itemsSubPrice = data.items_subtotal_price;
+    list.innerHTML = '';
+    items.forEach(function (item) {
+      renderCartItems(item);
+    });
+  })["catch"](function (error) {
+    console.log(error);
+  });
+}
+
+function renderCartItems(item) {
+  var templateClone = template.content.cloneNode(true); // list.innerHTML = '';
+
+  var imageWrapperLink = templateClone.querySelector('[data-list-item-image-wrapper]');
+  var image = templateClone.querySelector('[data-list-item-image]');
+  var titleWrapperLink = templateClone.querySelector('[data-list-item-title-wrapper]');
+  var title = templateClone.querySelector('[data-list-item-title]');
+  var quantity = templateClone.querySelector('[data-list-item-quantity]');
+  var price = templateClone.querySelector('[data-list-item-price]');
+  imageWrapperLink.href = item.url;
+  titleWrapperLink.href = item.url;
+  image.src = item.featured_image.url;
+  title.textContent = item.title;
+  quantity.value = item.quantity;
+  price.textContent = item.price;
+  list.appendChild(templateClone);
 }
 })();
 
