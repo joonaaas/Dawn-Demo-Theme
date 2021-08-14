@@ -3,33 +3,46 @@
 <noscript>{{ 'component-badge.css' | asset_url | stylesheet_tag }}</noscript>
 
 <div class="cart-drawer__container">
-  <div class="cart-drawer__header">
-    <h2>Cart</h2>
-    <button><svg xmlns="http://www.w3.org/2000/svg" class="" width="20" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd"
-          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-          clip-rule="evenodd" />
-      </svg></button>
-  </div>
+  <div class="cart-drawer__contents">
+    <div class="cart-drawer__header">
+      <h2>Cart</h2>
+      <button><svg xmlns="http://www.w3.org/2000/svg" class="" width="20" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd" />
+        </svg></button>
+    </div>
 
-  <div class="cart-drawer__body">
     <p data-cart-empty="true">Your cart is currently empty.</p>
-    <ul id="cart-list"></ul>
-
-    <!-- List template for cart items -->
-    <template id="list-item-template">
-        <li class="list-item">
-          <a href="#" data-list-item-image-wrapper>
-            <img src="" alt="" loading="lazy" data-list-item-image>
-          </a>
-          <div class="list-item__details">
-            <a href="#" data-list-item-title-wrapper><h3 class="list-item__title" data-list-item-title></h3></a>
-            <input type="number" name="quantity" id="quantity" data-list-item-quantity>
-            <div class="list-item__price" data-list-item-price></div>
+    <div class="cart-drawer__body">
+        <ul id="cart-list"></ul>
+        <div class="cart-drawer__checkout-wrapper" data-show-checkout-button="false">
+          <div class="cart-drawer__subtotal-wrapper">
+            <p>Subtotal</p>
+            <p data-cart-subtotal>0.00</p>
           </div>
-        </li>
-    </template>
+          <button type="submit" class="cart__checkout-button button" name="checkout"{% if cart == empty %} disabled{% endif %} form="cart" >
+            {{ 'sections.cart.checkout' | t }}
+          </button>
+        </div>
+      </div>
 
+
+      <!-- List template for cart items -->
+      <template id="list-item-template">
+          <li class="list-item" data-list-item-id>
+            <a href="#" data-list-item-image-wrapper>
+              <img src="" alt="" loading="lazy" data-list-item-image>
+            </a>
+            <div class="list-item__details">
+              <a href="#" data-list-item-title-wrapper><h3 class="list-item__title" data-list-item-title></h3></a>
+              <input type="number" name="quantity" id="quantity" data-list-item-quantity>
+              <div class="list-item__price" data-list-item-price></div>
+            </div>
+          </li>
+      </template>
+
+    </div>
   </div>
 </div>
 

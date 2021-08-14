@@ -2085,6 +2085,8 @@ forms.forEach(function (form) {
       showCartDrawer();
     })["catch"](function (error) {
       console.log(error);
+      console.log(formProps);
+      showCartDrawer();
     });
   });
 });
@@ -2111,13 +2113,13 @@ document.addEventListener('DOMContentLoaded', function () {
 function getCartItems() {
   axios.get('/cart.js').then(function (response) {
     var data = response.data;
-    var items = [];
-    items = data.items;
-    console.log(items);
-    items.length ? emptyText.dataset.cartEmpty = 'false' : emptyText.dataset.cartEmpty = 'true';
+    var cartItems = [];
+    cartItems = data.items;
+    console.log(cartItems);
+    checkCartItemsLength(cartItems);
     var itemsSubPrice = data.items_subtotal_price;
     list.innerHTML = '';
-    items.forEach(function (item) {
+    cartItems.forEach(function (item) {
       renderCartItems(item);
     });
   })["catch"](function (error) {
@@ -2128,12 +2130,14 @@ function getCartItems() {
 function renderCartItems(item) {
   var templateClone = template.content.cloneNode(true); // list.innerHTML = '';
 
+  var listID = templateClone.querySelector('[data-list-item-id]');
   var imageWrapperLink = templateClone.querySelector('[data-list-item-image-wrapper]');
   var image = templateClone.querySelector('[data-list-item-image]');
   var titleWrapperLink = templateClone.querySelector('[data-list-item-title-wrapper]');
   var title = templateClone.querySelector('[data-list-item-title]');
   var quantity = templateClone.querySelector('[data-list-item-quantity]');
   var price = templateClone.querySelector('[data-list-item-price]');
+  listID.dataset.listItemId = item.id;
   imageWrapperLink.href = item.url;
   titleWrapperLink.href = item.url;
   image.src = item.featured_image.url;
@@ -2141,6 +2145,19 @@ function renderCartItems(item) {
   quantity.value = item.quantity;
   price.textContent = item.price;
   list.appendChild(templateClone);
+}
+
+function checkCartItemsLength(items) {
+  var checkoutButton = document.querySelector('[data-show-checkout-button]');
+  console.log(checkoutButton);
+
+  if (items.length) {
+    emptyText.dataset.cartEmpty = 'false';
+    checkoutButton.dataset.showCheckoutButton = 'true';
+  } else {
+    checkoutButton.dataset.showCheckoutButton = 'false';
+    emptyText.dataset.cartEmpty = 'true';
+  }
 }
 })();
 

@@ -28,6 +28,9 @@ forms.forEach((form) => {
 			})
 			.catch(function (error) {
 				console.log(error);
+				console.log(formProps);
+
+				showCartDrawer();
 			});
 	});
 });
@@ -59,18 +62,16 @@ function getCartItems() {
 		.then(function (response) {
 			let data = response.data;
 
-			let items = [];
-			items = data.items;
-			console.log(items);
+			let cartItems = [];
+			cartItems = data.items;
+			console.log(cartItems);
 
-			items.length
-				? (emptyText.dataset.cartEmpty = 'false')
-				: (emptyText.dataset.cartEmpty = 'true');
+			checkCartItemsLength(cartItems);
 
 			let itemsSubPrice = data.items_subtotal_price;
 
 			list.innerHTML = '';
-			items.forEach((item) => {
+			cartItems.forEach((item) => {
 				renderCartItems(item);
 			});
 		})
@@ -82,7 +83,7 @@ function getCartItems() {
 function renderCartItems(item) {
 	const templateClone = template.content.cloneNode(true);
 	// list.innerHTML = '';
-
+	const listID = templateClone.querySelector('[data-list-item-id]');
 	const imageWrapperLink = templateClone.querySelector(
 		'[data-list-item-image-wrapper]'
 	);
@@ -94,6 +95,7 @@ function renderCartItems(item) {
 	const quantity = templateClone.querySelector('[data-list-item-quantity]');
 	const price = templateClone.querySelector('[data-list-item-price]');
 
+	listID.dataset.listItemId = item.id;
 	imageWrapperLink.href = item.url;
 	titleWrapperLink.href = item.url;
 	image.src = item.featured_image.url;
@@ -102,4 +104,17 @@ function renderCartItems(item) {
 	price.textContent = item.price;
 
 	list.appendChild(templateClone);
+}
+
+function checkCartItemsLength(items) {
+	const checkoutButton = document.querySelector('[data-show-checkout-button]');
+
+	console.log(checkoutButton);
+	if (items.length) {
+		emptyText.dataset.cartEmpty = 'false';
+		checkoutButton.dataset.showCheckoutButton = 'true';
+	} else {
+		checkoutButton.dataset.showCheckoutButton = 'false';
+		emptyText.dataset.cartEmpty = 'true';
+	}
 }
